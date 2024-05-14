@@ -1,24 +1,12 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import {
-    SafeAreaView,
-    useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Content = ({ children }: any) => {
-    const insets = useSafeAreaInsets();
-
-    return (
-        <View style={[styles.container, { marginTop: insets.top }]}>
-            {children}
-        </View>
-    );
+    return <SafeAreaView style={[styles.container]}>{children}</SafeAreaView>;
 };
 
 const styles = StyleSheet.create({
-    flexContainer: {
-        flex: 1,
-    },
     container: {
         flex: 1,
         paddingHorizontal: 20, // Approximate conversion of TailwindCSS px-5

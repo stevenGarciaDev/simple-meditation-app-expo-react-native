@@ -8,7 +8,11 @@ module.exports = {
     "./app/(tabs)/meditate.tsx"  
   ],
     theme: {
-      extend: {},
+      extend: {
+        fontFamily: {
+          rmono: ['Roboto-Mono', 'sans-serif']
+        }
+      },
     },
     plugins: [],
 }

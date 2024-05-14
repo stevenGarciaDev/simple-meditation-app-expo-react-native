@@ -5,7 +5,7 @@ import { View, StyleSheet } from "react-native";
 const Page = () => {
     return (
         <View style={styles.container}>
-            <Link href="/(tabs)/meditate">Ready to meditate</Link>
+            <Link href="/(tabs)/nature-meditate">Ready to meditate</Link>
         </View>
     );
 };

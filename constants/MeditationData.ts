@@ -7,32 +7,32 @@ export interface MeditationType {
 export const MEDITATION_DATA = [
     {
         id: 1,
-        title: "Guided Meditation",
+        title: "Mountains",
         image: "tree.png",
     },
     {
         id: 2,
-        title: "Mindfullness",
+        title: "Rivers",
         image: "river.png",
     },
     {
         id: 3,
-        title: "Mantra Meditation",
+        title: "Trees",
         image: "meditate-under-tree.png",
     },
     {
         id: 4,
-        title: "Guided Meditation",
+        title: "Beaches",
         image: "tree.png",
     },
     {
         id: 5,
-        title: "Mindfullness",
+        title: "Night Sky",
         image: "river.png",
     },
     {
         id: 6,
-        title: "Mantra Meditation",
+        title: "Waterfall",
         image: "meditate-under-tree.png",
     },
 ];

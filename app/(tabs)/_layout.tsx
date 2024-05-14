@@ -1,7 +1,6 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { StyleSheet } from "react-native";
 import Colors from "@/constants/Colors";
 import React from "react";
 
@@ -19,22 +18,9 @@ const Page = () => {
             }}
         >
             <Tabs.Screen
-                name="meditate"
+                name="nature-meditate"
                 options={{
                     tabBarLabel: "Meditate",
-                    tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons
-                            name="yoga"
-                            size={24}
-                            color={color}
-                        />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="relax"
-                options={{
-                    tabBarLabel: "Relax",
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons
                             name="flower-tulip"
@@ -45,20 +31,20 @@ const Page = () => {
                 }}
             />
             <Tabs.Screen
-                name="profile"
+                name="affirmations"
                 options={{
-                    tabBarLabel: "Profile",
+                    tabBarLabel: "Affirmations",
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome5 name="user" size={24} color={color} />
+                        <FontAwesome5
+                            name="shopping-bag"
+                            size={24}
+                            color={color}
+                        />
                     ),
                 }}
             />
         </Tabs>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {},
-});
 
 export default Page;
