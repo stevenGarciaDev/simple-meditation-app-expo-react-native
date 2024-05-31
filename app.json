@@ -8,7 +8,7 @@
         "scheme": "simplemeditation",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./assets/splashSimpleMeditation.png",
+            "image": "./assets/simpleMeditationLogo.png",
             "resizeMode": "contain",
             "backgroundColor": "#ffffff"
         },

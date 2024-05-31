@@ -4,7 +4,7 @@ export interface MeditationType {
     image: string;
 }
 
-export const MEDITATION_DATA = [
+export const MEDITATION_DATA: MeditationType[] = [
     {
         id: 1,
         title: "Mountains",
@@ -17,7 +17,7 @@ export const MEDITATION_DATA = [
     },
     {
         id: 3,
-        title: "Trees",
+        title: "Sunset",
         image: "meditate-under-tree.png",
     },
     {
@@ -27,7 +27,7 @@ export const MEDITATION_DATA = [
     },
     {
         id: 5,
-        title: "Night Sky",
+        title: "Starry Night",
         image: "river.png",
     },
     {

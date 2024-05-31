@@ -1,14 +1,11 @@
-import AppGradient from "@/components/AppGradient";
-import AppScreen from "@/components/AppScreen";
 import GuidedAffirmationsGallery from "@/components/GuidedAffirmationsGallery";
+import AFFIRMATION_GALLERY from "@/constants/affirmation-gallary";
+import images from "@/constants/affirmation-images";
+import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import images from "@/constants/affirmation-images";
-import AFFIRMATION_GALLERY from "@/constants/affirmation-gallary";
 
 const Page = () => {
     const insets = useSafeAreaInsets();

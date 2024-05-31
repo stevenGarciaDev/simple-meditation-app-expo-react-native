@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 
@@ -14,9 +13,7 @@ const AffirmationsLayout = () => {
             <Stack.Screen
                 name="[itemId]"
                 options={{
-                    headerShown: true,
-                    headerBackTitle: "Back",
-                    headerTitle: "Affirmations",
+                    headerShown: false,
                 }}
             />
         </Stack>

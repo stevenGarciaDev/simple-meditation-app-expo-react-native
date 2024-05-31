@@ -1,5 +1,4 @@
-import { FontAwesome5 } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import Colors from "@/constants/Colors";
 import React from "react";
@@ -35,11 +34,7 @@ const Page = () => {
                 options={{
                     tabBarLabel: "Affirmations",
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome5
-                            name="shopping-bag"
-                            size={24}
-                            color={color}
-                        />
+                        <Entypo name="open-book" size={24} color={color} />
                     ),
                 }}
             />

@@ -1,10 +1,10 @@
-export interface Product {
+export interface AffirmationCategory {
     title: string;
     data: GalleryPreviewData[];
 }
 
 export interface GalleryPreviewData {
     id: number;
-    name: string;
+    text: string;
     image: any;
 }

@@ -1,15 +1,10 @@
 import AppGradient from "@/components/AppGradient";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
-import {
-    ImageBackground,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
-} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ImageBackground, Pressable, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Audio } from "expo-av";
+import CustomButton from "@/components/CustomButton";
 
 import beachImage from "@/assets/beach.png";
 import meditatingUnderTree from "@/assets/meditate-under-tree.png";
@@ -17,7 +12,7 @@ import riverImage from "@/assets/river.png";
 import treeImage from "@/assets/trees.png";
 import waterfall from "@/assets/waterfall.png";
 import yosemiteStars from "@/assets/yosemite-stars.png";
-import CustomButton from "@/components/CustomButton";
+import { TimerContext } from "@/context/TimerContext";
 
 const images = [
     treeImage,
@@ -31,9 +26,13 @@ const images = [
 const Page = () => {
     const { id } = useLocalSearchParams();
 
+    const { duration: secondsRemaining, setDuration } =
+        useContext(TimerContext);
+
     const [isMeditating, setMeditating] = useState(false);
-    const [secondsRemaining, setSecondsRemaining] = useState(10);
-    const [sound, setSound] = useState<Audio.Sound>();
+    // const [secondsRemaining, setSecondsRemaining] = useState(10);
+    const [audioSound, setSound] = useState<Audio.Sound>();
+    const [isPlayingAudio, setPlayingAudio] = useState(false);
 
     useEffect(() => {
         let timerId: NodeJS.Timeout;
@@ -41,55 +40,66 @@ const Page = () => {
         // Exit early when we reach 0
         if (secondsRemaining === 0) {
             console.log("Meditation complete.");
+
+            if (isPlayingAudio) audioSound?.unloadAsync();
             return;
         }
 
         if (isMeditating) {
             // Save the interval ID to clear it when the component unmounts
             timerId = setTimeout(() => {
-                setSecondsRemaining(secondsRemaining - 1);
+                setDuration(secondsRemaining - 1);
             }, 1000);
         }
 
         // Clear timeout if the component is unmounted or the time left changes
         return () => {
             clearTimeout(timerId);
-            console.log("unload");
-            sound?.unloadAsync();
         };
     }, [secondsRemaining, isMeditating]);
 
     useEffect(() => {
         return () => {
-            sound?.unloadAsync();
+            audioSound?.unloadAsync();
         };
-    }, [sound]);
+    }, [audioSound]);
 
-    async function playSound() {
-        console.log("Loading Sound");
+    const initializeSound = async () => {
         const { sound } = await Audio.Sound.createAsync(
             require("../../assets/audio/ES_Jukebox_Jackpot.mp3")
         );
         setSound(sound);
+        return sound;
+    };
 
-        console.log("Playing Sound");
-        await sound.playAsync();
-        console.log("playAsync");
-    }
+    const togglePlayPause = async () => {
+        const sound = audioSound ? audioSound : await initializeSound();
+
+        const status = await sound?.getStatusAsync();
+        if (status?.isLoaded && !isPlayingAudio) {
+            await sound?.playAsync();
+            setPlayingAudio(true);
+        } else {
+            await sound?.pauseAsync();
+            setPlayingAudio(false);
+        }
+    };
 
     async function toggleMeditationSessionStatus() {
         setMeditating(!isMeditating);
 
         if (!isMeditating) {
-            console.log("playSound");
-            await playSound();
+            await togglePlayPause();
         } else {
-            await sound?.stopAsync();
+            await audioSound?.stopAsync();
         }
     }
 
     // Format the timeLeft to ensure two digits are displayed
-    const formattedTime = String(secondsRemaining).padStart(2, "0");
+    const formattedTimeMinutes = String(
+        Math.floor(secondsRemaining / 60)
+    ).padStart(2, "0");
+    const formattedTimeSeconds = String(secondsRemaining % 60).padStart(2, "0");
 
     return (
         <View className="flex-1">
@@ -112,13 +122,26 @@ const Page = () => {
                                 className="text-4xl text-blue-800 font-rmono"
                                 // style={{ fontFamily: "Roboto-Mono" }}
                             >
-                                00.{formattedTime}
+                                {formattedTimeMinutes}.{formattedTimeSeconds}
                             </Text>
                         </View>
                     </View>
 
                     <View className="mb-5">
-                        <CustomButton title="Play Audio" onPress={playSound} />
+                        {/* <CustomButton
+                            title={
+                                isPlayingAudio ? `Pause Audio` : `Play Audio`
+                            }
+                            onPress={togglePlayPause}
+                        /> */}
+                        <CustomButton
+                            title="Adjust duration"
+                            onPress={() =>
+                                router.push(
+                                    "/(modal)/adjust-meditation-duration"
+                                )
+                            }
+                        />
                         <CustomButton
                             title={isMeditating ? "Stop" : "Start"}
                             onPress={toggleMeditationSessionStatus}
