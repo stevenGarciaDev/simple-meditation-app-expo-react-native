@@ -22,15 +22,6 @@ const Page = () => {
                     <Text className="text-zinc-50 text-3xl font-bold">
                         Change your beliefs with affirmations
                     </Text>
-
-                    {/* <View className="flex flex-row bg-white mt-5 p-3 items-center rounded-xl">
-                        <AntDesign name="search1" size={25} color="black" />
-                        <TextInput
-                            placeholder="Search for affirmation"
-                            placeholderTextColor="gray"
-                            className="text-2xl text-black h-9 ml-2"
-                        />
-                    </View> */}
                     <View>
                         {AFFIRMATION_GALLERY.map((g) => (
                             <GuidedAffirmationsGallery
