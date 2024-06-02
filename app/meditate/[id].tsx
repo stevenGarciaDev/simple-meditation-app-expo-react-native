@@ -6,22 +6,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import CustomButton from "@/components/CustomButton";
 
-import beachImage from "@/assets/beach.png";
-import meditatingUnderTree from "@/assets/meditate-under-tree.png";
-import riverImage from "@/assets/river.png";
-import treeImage from "@/assets/trees.png";
-import waterfall from "@/assets/waterfall.png";
-import yosemiteStars from "@/assets/yosemite-stars.png";
+import MEDITATION_IMAGES from "@/constants/meditation-images";
 import { TimerContext } from "@/context/TimerContext";
-
-const images = [
-    treeImage,
-    riverImage,
-    meditatingUnderTree,
-    beachImage,
-    yosemiteStars,
-    waterfall,
-];
+import { MEDITATION_DATA, AUDIO_FILES } from "@/constants/MeditationData";
 
 const Page = () => {
     const { id } = useLocalSearchParams();
@@ -30,7 +17,6 @@ const Page = () => {
         useContext(TimerContext);
 
     const [isMeditating, setMeditating] = useState(false);
-    // const [secondsRemaining, setSecondsRemaining] = useState(10);
     const [audioSound, setSound] = useState<Audio.Sound>();
     const [isPlayingAudio, setPlayingAudio] = useState(false);
 
@@ -39,9 +25,9 @@ const Page = () => {
 
         // Exit early when we reach 0
         if (secondsRemaining === 0) {
-            console.log("Meditation complete.");
-
-            if (isPlayingAudio) audioSound?.unloadAsync();
+            if (isPlayingAudio) audioSound?.pauseAsync();
+            setMeditating(false);
+            setPlayingAudio(false);
             return;
         }
 
@@ -60,13 +46,16 @@ const Page = () => {
 
     useEffect(() => {
         return () => {
+            setDuration(10);
             audioSound?.unloadAsync();
         };
     }, [audioSound]);
 
     const initializeSound = async () => {
+        const audioFileName = MEDITATION_DATA[Number(id) - 1].audio;
+
         const { sound } = await Audio.Sound.createAsync(
-            require("../../assets/audio/ES_Jukebox_Jackpot.mp3")
+            AUDIO_FILES[audioFileName]
         );
         setSound(sound);
         return sound;
@@ -76,6 +65,7 @@ const Page = () => {
         const sound = audioSound ? audioSound : await initializeSound();
 
         const status = await sound?.getStatusAsync();
+
         if (status?.isLoaded && !isPlayingAudio) {
             await sound?.playAsync();
             setPlayingAudio(true);
@@ -86,14 +76,18 @@ const Page = () => {
     };
 
     async function toggleMeditationSessionStatus() {
+        if (secondsRemaining === 0) setDuration(10);
+
         setMeditating(!isMeditating);
 
-        if (!isMeditating) {
-            await togglePlayPause();
-        } else {
-            await audioSound?.stopAsync();
-        }
+        await togglePlayPause();
     }
+
+    const handleAdjustDuration = () => {
+        if (isMeditating) toggleMeditationSessionStatus();
+
+        router.push("/(modal)/adjust-meditation-duration");
+    };
 
     // Format the timeLeft to ensure two digits are displayed
     const formattedTimeMinutes = String(
@@ -104,7 +98,7 @@ const Page = () => {
     return (
         <View className="flex-1">
             <ImageBackground
-                source={images[Number(id) - 1]}
+                source={MEDITATION_IMAGES[Number(id) - 1]}
                 resizeMode="cover"
                 className="flex-1"
             >
@@ -118,32 +112,19 @@ const Page = () => {
 
                     <View className="flex-1 justify-center">
                         <View className="mx-auto bg-neutral-200 rounded-full w-44 h-44 justify-center items-center">
-                            <Text
-                                className="text-4xl text-blue-800 font-rmono"
-                                // style={{ fontFamily: "Roboto-Mono" }}
-                            >
+                            <Text className="text-4xl text-blue-800 font-rmono">
                                 {formattedTimeMinutes}.{formattedTimeSeconds}
                             </Text>
                         </View>
                     </View>
 
                     <View className="mb-5">
-                        {/* <CustomButton
-                            title={
-                                isPlayingAudio ? `Pause Audio` : `Play Audio`
-                            }
-                            onPress={togglePlayPause}
-                        /> */}
                         <CustomButton
                             title="Adjust duration"
-                            onPress={() =>
-                                router.push(
-                                    "/(modal)/adjust-meditation-duration"
-                                )
-                            }
+                            onPress={handleAdjustDuration}
                         />
                         <CustomButton
-                            title={isMeditating ? "Stop" : "Start"}
+                            title={isMeditating ? "Stop" : "Start Meditation"}
                             onPress={toggleMeditationSessionStatus}
                             containerStyles="mt-4"
                         />

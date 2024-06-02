@@ -11,8 +11,7 @@ import Animated, {
     withSpring,
 } from "react-native-reanimated";
 
-import beachImage from "@/assets/beach.png";
-import simpleMeditationLogo from "@/assets/simpleMeditationLogo.png";
+import beachImage from "@/assets/meditation-images/beach.webp";
 
 const App = () => {
     const router = useRouter();

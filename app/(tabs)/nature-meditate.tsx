@@ -1,4 +1,3 @@
-import Content from "@/components/Content";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { router } from "expo-router";
@@ -11,26 +10,11 @@ import {
     Text,
     View,
 } from "react-native";
-import Constants from "expo-constants";
 
-import treeImage from "@/assets/trees.png";
-import meditatingUnderTree from "@/assets/meditate-under-tree.png";
-import riverImage from "@/assets/river.png";
-import beachImage from "@/assets/beach.png";
-import yosemiteStars from "@/assets/yosemite-stars.png";
-import waterfall from "@/assets/waterfall.png";
+import MEDITATION_IMAGES from "@/constants/meditation-images";
 
 import { MEDITATION_DATA, MeditationType } from "@/constants/MeditationData";
 import AppGradient from "@/components/AppGradient";
-
-const images = [
-    treeImage,
-    riverImage,
-    meditatingUnderTree,
-    beachImage,
-    yosemiteStars,
-    waterfall,
-];
 
 const Page = () => {
     return (
@@ -61,7 +45,7 @@ const Page = () => {
                                 className="h-48 my-3 rounded-md overflow-hidden"
                             >
                                 <ImageBackground
-                                    source={images[item.id - 1]}
+                                    source={MEDITATION_IMAGES[item.id - 1]}
                                     resizeMode="cover"
                                     style={styles.backgroundImage}
                                 >
@@ -101,10 +85,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     gradient: {
-        width: "100%",
+        alignItems: "center",
         height: "100%",
         justifyContent: "center",
-        alignItems: "center",
+        width: "100%",
     },
     list: {
         paddingBottom: 150,
