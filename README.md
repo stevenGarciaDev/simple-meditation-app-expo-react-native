@@ -99,6 +99,14 @@ npx expo start
 
 Download the [Expo Go](https://expo.dev/go) app onto your device, then use it to scan the QR code from Terminal and run.
 
+**iOS Simulator**
+
+Navigate to the [Expo documentation](https://docs.expo.dev/workflow/ios-simulator/) to learn how to install and run your application on an iOS Simulator for local development.
+
+**Android Emulator**
+
+Navigate to the [Expo documentation](https://docs.expo.dev/workflow/android-studio-emulator/) to learn how to install and run your application on an Android Emulator for local development.
+
 ## <a name="snippets">🕸️ Snippets</a>
 
 <details>
